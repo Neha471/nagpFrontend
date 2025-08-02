@@ -1,5 +1,6 @@
 <script>
     import { goto } from '$app/navigation';
+    let name = '';
     let email = '';
     let password = '';
     let passwordVisible = false;
@@ -13,7 +14,7 @@
         const res = await fetch(REGISTER_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password })
+          body: JSON.stringify({ name, email, password })
         });
         const data = await res.json();
         if (res.ok) {
@@ -100,6 +101,7 @@
   }
 </style>
 <form class="form-card" on:submit|preventDefault={handleRegister}>
+    <input type="text" bind:value={name} placeholder="Name" required />
     <input type="email" bind:value={email} placeholder="Email" required />
     <div>
       <input type={passwordVisible ? "text" : "password"} bind:value={password} placeholder="Password" required />
