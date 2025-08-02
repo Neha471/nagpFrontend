@@ -1,0 +1,122 @@
+# version: '3.8'
+
+services:
+  consul:
+    image: consul:1.15.4
+    ports:
+      - "8500:8500"
+    command: "agent -dev -client=0.0.0.0"
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+  api-gateway:
+    image: neha531/ecommerce-app-api-gateway:latest
+    ports:
+      - "4000:4000"
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+      - PORT=4000
+      - HOST=api-gateway
+    depends_on:
+      - consul
+      - auth-service
+      - product-service
+      - cart-service
+      - inventory-service
+      - notification-service
+      - order-service
+      - payment-service
+
+  auth-service:
+    image: neha531/ecommerce-app-auth-service:latest
+    ports:
+      - "5006:5000"
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+      - PORT=5000
+      - HOST=auth-service
+      - MONGO_URI=mongodb+srv://neha:Neha%40123@cluster0.kfz6xfv.mongodb.net/?retryWrites=true&w=majority&appName=cluster0
+    depends_on:
+      - consul
+      - mongo
+
+  product-service:
+    image: neha531/ecommerce-app-product-service:latest
+    ports:
+      - "5001:5001"
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+      - PORT=5001
+      - HOST=product-service
+    depends_on:
+      - consul
+
+  cart-service:
+    image: neha531/ecommerce-app-cart-service:latest
+    ports:
+      - "5002:5002"
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+      - PORT=5002
+      - HOST=cart-service
+    depends_on:
+      - consul
+
+  inventory-service:
+    image: neha531/ecommerce-app-inventory-service:latest
+    ports:
+      - "5004:5004"
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+      - PORT=5004
+      - HOST=inventory-service
+    depends_on:
+      - consul
+
+  notification-service:
+    image: neha531/ecommerce-app-notification-service:latest
+    ports:
+      - "5010:5010"
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+      - PORT=5010
+      - HOST=notification-service
+    depends_on:
+      - consul
+
+  order-service:
+    image: neha531/ecommerce-app-order-service:latest
+    ports:
+      - "5003:5003"
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+      - PORT=5003
+      - HOST=order-service
+    depends_on:
+      - consul
+  payment-service:
+    image: neha531/ecommerce-app-payment-service:latest
+    ports:
+      - "5005:5005"
+    environment:
+      - CONSUL_HOST=consul
+      - CONSUL_PORT=8500
+      - PORT=5005
+      - HOST=payment-service
+    depends_on:
+      - consul
+
+volumes:
+  mongo-data:
