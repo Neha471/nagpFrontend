@@ -39,15 +39,23 @@ docker-compose -f docker-compose.consul.yml down
 ```
 
 
-## Docker Setup
+## How to run frontend docker container
 
 ### Important Note
-Before starting the frontend Docker container, make sure to start all the required backend microservices first using the commands provided in the Backend Services section below.
+Before starting the frontend docker container, make sure to start all the required backend microservices first using the commands provided in the Backend Services section below.
 
 ### Run Docker Container
 
 ```bash
 docker run -d -p 3000:3000 --name nagp-frontend neha531/nagp-frontend:latest
+```
+
+### Deployed frontend app on vercel
+
+Frontend app is deployed on vercel also. You can also access it from here. But make sure to run all the backend services as mentioned in the Backend Services section.
+
+```bash
+https://nagp-frontend.vercel.app/
 ```
 
 ## Environment Variables
