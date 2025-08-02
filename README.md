@@ -10,6 +10,9 @@ This is the frontend application for the NAGP project, built with SvelteKit and 
 - Docker Compose (v2.0 or later)
 
 
+## Setup Docker
+Your docker should be running before starting the container.
+
 ## Backend Services
 
 Before running the frontend container, you need to start the backend microservices using Docker Compose:
@@ -50,6 +53,12 @@ Before starting the frontend docker container, make sure to start all the requir
 docker run -d -p 3000:3000 --name nagp-frontend neha531/nagp-frontend:latest
 ```
 
+### Access the Frontend
+
+```bash
+http://localhost:3000
+```
+
 ### Deployed frontend app on vercel
 
 Frontend app is deployed on vercel also. You can also access it from here. But make sure to run all the backend services as mentioned in the Backend Services section.
@@ -57,20 +66,18 @@ Frontend app is deployed on vercel also. You can also access it from here. But m
 ```bash
 https://nagp-frontend.vercel.app/
 ```
+## Running Locally?
 
-## Environment Variables
+If you want to run the frontend locally, you can use the following command:
 
-The following environment variables can be configured:
-
-- `NODE_ENV`: Environment (development, production)
-- `PORT`: Port to run the application (default: 3000)
-- `API_URL`: Base URL for API requests (default: http://localhost:5000)
-
-## Troubleshooting
-
-- If you encounter port conflicts, make sure no other services are running on the required ports (3000 for frontend, 5000 for backend by default).
-- Ensure all backend services are running before starting the frontend in production mode.
-- For Docker-related issues, verify that Docker is running and you have sufficient permissions.
+```bash
+npm install
+npm run dev
+```
+## Your frontend app is running locally on
+ ```bash
+http://localhost:5173
+```
 
 ## License
 
